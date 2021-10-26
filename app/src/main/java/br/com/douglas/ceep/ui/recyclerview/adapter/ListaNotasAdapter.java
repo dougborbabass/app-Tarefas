@@ -14,6 +14,7 @@ import java.util.List;
 
 import br.com.douglas.ceep.R;
 import br.com.douglas.ceep.model.Nota;
+import br.com.douglas.ceep.ui.recyclerview.adapter.listener.OnItemClickListener;
 
 public class ListaNotasAdapter extends RecyclerView.Adapter<ListaNotasAdapter.NotaViewHolder> {
 
@@ -54,6 +55,7 @@ public class ListaNotasAdapter extends RecyclerView.Adapter<ListaNotasAdapter.No
 
         private final TextView titulo;
         private final TextView descricao;
+        private Nota nota;
 
         public NotaViewHolder(View itemView) {
             super(itemView);
@@ -61,12 +63,13 @@ public class ListaNotasAdapter extends RecyclerView.Adapter<ListaNotasAdapter.No
             descricao = itemView.findViewById(R.id.item_nota_descricao);
 
             itemView.setOnClickListener(v ->
-                    onItemClickListener.onItemClick());
+                    onItemClickListener.onItemClick(nota));
         }
 
         public void vincula(Nota nota) {
             titulo.setText(nota.getTitulo());
             descricao.setText(nota.getDescricao());
+            this.nota = nota;
         }
     }
 

@@ -17,7 +17,6 @@ import br.com.douglas.ceep.R;
 import br.com.douglas.ceep.dao.NotaDAO;
 import br.com.douglas.ceep.model.Nota;
 import br.com.douglas.ceep.ui.recyclerview.adapter.ListaNotasAdapter;
-import br.com.douglas.ceep.ui.recyclerview.adapter.OnItemClickListener;
 
 public class ListaNotasActivity extends AppCompatActivity {
 
@@ -28,10 +27,19 @@ public class ListaNotasActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lista_notas);
 
-        List<Nota> todasNotas = new NotaDAO().todos();
+        List<Nota> todasNotas = pegaTodasNotas();
+
         configuraRecyclerView(todasNotas);
 
         configuraBtnInsereNota();
+    }
+
+    private List<Nota> pegaTodasNotas() {
+        NotaDAO dao = new NotaDAO();
+        for (int i = 0; i < 10; i++){
+            dao.insere(new Nota("Titulo " + (i+1), "Descricao " + (i+1)));
+        }
+        return dao.todos();
     }
 
     private void configuraBtnInsereNota() {
@@ -70,8 +78,8 @@ public class ListaNotasActivity extends AppCompatActivity {
     private void configuraAdapter(List<Nota> todasNotas, RecyclerView listaNotas) {
         adapter = new ListaNotasAdapter(this, todasNotas);
         listaNotas.setAdapter(adapter);
-        adapter.setOnItemClickListener(() -> {
-            Toast.makeText(this, "TESTE",Toast.LENGTH_LONG).show();
+        adapter.setOnItemClickListener((nota) -> {
+            Toast.makeText(this, nota.getTitulo(),Toast.LENGTH_SHORT).show();
         });
     }
 }
