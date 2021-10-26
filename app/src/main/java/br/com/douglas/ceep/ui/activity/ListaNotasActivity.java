@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
@@ -16,6 +17,7 @@ import br.com.douglas.ceep.R;
 import br.com.douglas.ceep.dao.NotaDAO;
 import br.com.douglas.ceep.model.Nota;
 import br.com.douglas.ceep.ui.recyclerview.adapter.ListaNotasAdapter;
+import br.com.douglas.ceep.ui.recyclerview.adapter.OnItemClickListener;
 
 public class ListaNotasActivity extends AppCompatActivity {
 
@@ -68,5 +70,8 @@ public class ListaNotasActivity extends AppCompatActivity {
     private void configuraAdapter(List<Nota> todasNotas, RecyclerView listaNotas) {
         adapter = new ListaNotasAdapter(this, todasNotas);
         listaNotas.setAdapter(adapter);
+        adapter.setOnItemClickListener(() -> {
+            Toast.makeText(this, "TESTE",Toast.LENGTH_LONG).show();
+        });
     }
 }

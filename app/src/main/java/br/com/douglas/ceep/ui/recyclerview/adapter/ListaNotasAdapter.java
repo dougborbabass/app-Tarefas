@@ -19,10 +19,15 @@ public class ListaNotasAdapter extends RecyclerView.Adapter<ListaNotasAdapter.No
 
     private final List<Nota> notas;
     private final Context context;
+    private OnItemClickListener onItemClickListener;
 
     public ListaNotasAdapter(Context context, List<Nota> notas) {
         this.context = context;
         this.notas = notas;
+    }
+
+    public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
+        this.onItemClickListener = onItemClickListener;
     }
 
     @NonNull
@@ -45,7 +50,7 @@ public class ListaNotasAdapter extends RecyclerView.Adapter<ListaNotasAdapter.No
         return notas.size();
     }
 
-    static class NotaViewHolder extends RecyclerView.ViewHolder {
+    class NotaViewHolder extends RecyclerView.ViewHolder {
 
         private final TextView titulo;
         private final TextView descricao;
@@ -54,6 +59,9 @@ public class ListaNotasAdapter extends RecyclerView.Adapter<ListaNotasAdapter.No
             super(itemView);
             titulo = itemView.findViewById(R.id.item_nota_titulo);
             descricao = itemView.findViewById(R.id.item_nota_descricao);
+
+            itemView.setOnClickListener(v ->
+                    onItemClickListener.onItemClick());
         }
 
         public void vincula(Nota nota) {
