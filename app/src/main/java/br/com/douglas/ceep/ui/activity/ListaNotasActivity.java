@@ -10,6 +10,7 @@ import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
@@ -18,6 +19,7 @@ import br.com.douglas.ceep.R;
 import br.com.douglas.ceep.dao.NotaDAO;
 import br.com.douglas.ceep.model.Nota;
 import br.com.douglas.ceep.ui.recyclerview.adapter.ListaNotasAdapter;
+import br.com.douglas.ceep.ui.recyclerview.helper.callback.NotaItemTouchHelperCallBack;
 
 import static br.com.douglas.ceep.ui.activity.NotasActivityConstantes.CHAVE_NOTA;
 import static br.com.douglas.ceep.ui.activity.NotasActivityConstantes.CHAVE_POSICAO;
@@ -92,14 +94,17 @@ public class ListaNotasActivity extends AppCompatActivity {
     }
 
     private void configuraRecyclerView(List<Nota> todasNotas) {
-        RecyclerView listaNotas = findViewById(R.id.lista_notas_recyclerview);
-        configuraAdapter(todasNotas, listaNotas);
+        RecyclerView listaNotasRecyclerView = findViewById(R.id.lista_notas_recyclerview);
+        configuraAdapter(todasNotas, listaNotasRecyclerView);
+
+        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(new NotaItemTouchHelperCallBack(adapter));
+        itemTouchHelper.attachToRecyclerView(listaNotasRecyclerView);
+
     }
 
     private void configuraAdapter(List<Nota> todasNotas, RecyclerView listaNotas) {
         adapter = new ListaNotasAdapter(this, todasNotas);
         listaNotas.setAdapter(adapter);
-
         adapter.setOnItemClickListener(this::vaiParaFormularioNotaActivityAltera);
     }
 

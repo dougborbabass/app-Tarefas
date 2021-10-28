@@ -73,7 +73,6 @@ public class ListaNotasAdapter extends RecyclerView.Adapter<ListaNotasAdapter.No
         }
     }
 
-    @SuppressLint("NotifyDataSetChanged")
     public void adiciona(Nota nota) {
         notas.add(nota);
         notifyDataSetChanged();
@@ -81,6 +80,11 @@ public class ListaNotasAdapter extends RecyclerView.Adapter<ListaNotasAdapter.No
 
     public void altera(int posicao, Nota notaRecebida) {
         notas.set(posicao, notaRecebida);
+        notifyDataSetChanged();
+    }
+
+    public void remove(int posicao) {
+        notas.remove(posicao);
         notifyDataSetChanged();
     }
 }
