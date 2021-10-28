@@ -1,6 +1,8 @@
 # app-Tarefas
 CRUD de lista de tarefas com titulo e descrição.
 
-! Falta implementação de remover tarefas !
+O app permite criar, alterar e remover notas.
 
-(app com a ideia basica de criar listas utilizando recyclerview)
+Funcionalidade de deslizar para apagar e também de reorganização de lista ao clicar e arrastar
+
+(app com a ideia basica de criar listas utilizando recyclerview e suas funcionalidades)
