@@ -1,13 +1,11 @@
 package br.com.douglas.ceep.ui.recyclerview.adapter;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.Collections;
@@ -32,12 +30,10 @@ public class ListaNotasAdapter extends RecyclerView.Adapter<ListaNotasAdapter.No
         this.onItemClickListener = onItemClickListener;
     }
 
-    @NonNull
     @Override
-    public ListaNotasAdapter.NotaViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public ListaNotasAdapter.NotaViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View viewCriada = LayoutInflater.from(context)
                 .inflate(R.layout.item_nota, parent, false);
-
         return new NotaViewHolder(viewCriada);
     }
 
@@ -62,15 +58,17 @@ public class ListaNotasAdapter extends RecyclerView.Adapter<ListaNotasAdapter.No
             super(itemView);
             titulo = itemView.findViewById(R.id.item_nota_titulo);
             descricao = itemView.findViewById(R.id.item_nota_descricao);
-
-            itemView.setOnClickListener(v ->
-                    onItemClickListener.onItemClick(nota, getBindingAdapterPosition()));
+            itemView.setOnClickListener(view -> onItemClickListener.onItemClick(nota, getBindingAdapterPosition()));
         }
 
         public void vincula(Nota nota) {
+            this.nota = nota;
+            preencheCampo(nota);
+        }
+
+        private void preencheCampo(Nota nota) {
             titulo.setText(nota.getTitulo());
             descricao.setText(nota.getDescricao());
-            this.nota = nota;
         }
     }
 
@@ -79,18 +77,19 @@ public class ListaNotasAdapter extends RecyclerView.Adapter<ListaNotasAdapter.No
         notifyDataSetChanged();
     }
 
-    public void altera(int posicao, Nota notaRecebida) {
-        notas.set(posicao, notaRecebida);
+    public void altera(int posicao, Nota nota) {
+        notas.set(posicao, nota);
         notifyDataSetChanged();
     }
 
     public void remove(int posicao) {
         notas.remove(posicao);
-        notifyDataSetChanged();
+        notifyItemRemoved(posicao);
     }
 
-    public void troca(int posInicial, int posFinal) {
-        Collections.swap(notas, posInicial, posFinal);
-        notifyDataSetChanged();
+    public void troca(int posicaoInicial, int posicaoFinal) {
+        Collections.swap(notas, posicaoInicial, posicaoFinal);
+        notifyItemMoved(posicaoInicial, posicaoFinal);
     }
+
 }
