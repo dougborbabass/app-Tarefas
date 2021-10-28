@@ -63,7 +63,7 @@ public class ListaNotasAdapter extends RecyclerView.Adapter<ListaNotasAdapter.No
             descricao = itemView.findViewById(R.id.item_nota_descricao);
 
             itemView.setOnClickListener(v ->
-                    onItemClickListener.onItemClick(nota));
+                    onItemClickListener.onItemClick(nota, getBindingAdapterPosition()));
         }
 
         public void vincula(Nota nota) {
@@ -76,6 +76,11 @@ public class ListaNotasAdapter extends RecyclerView.Adapter<ListaNotasAdapter.No
     @SuppressLint("NotifyDataSetChanged")
     public void adiciona(Nota nota) {
         notas.add(nota);
+        notifyDataSetChanged();
+    }
+
+    public void altera(int posicao, Nota notaRecebida) {
+        notas.set(posicao, notaRecebida);
         notifyDataSetChanged();
     }
 }
